@@ -17,7 +17,7 @@ to check network performance between different servers
 docker run -itd --net="host" stmassey/iperf3-server
 ```
 
-You can check the logs to see which ipaddresses are available to connect to the iperf3 server. Select one of those and pass it to the client as an envvar:
+You can check the logs to see which ip addresses are available to connect to the iperf3 server. Select one of those and pass it to the client as an envvar:
 
 ```
 docker run -it --net="host" --env IPERF3_HOSTNAME=<hostname> stmassey/iperf3-client
