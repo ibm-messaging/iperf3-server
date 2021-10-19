@@ -58,8 +58,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && chown -R mqperf /home/mqperf/iperf3 \
   && echo "cd ~/iperf3" >> /home/mqperf/.bashrc
 
+COPY *.sh /home/mqperf/iperf3/
 USER mqperf
 WORKDIR /home/mqperf/iperf3
 EXPOSE 5201
 
-ENTRYPOINT ["iperf3"]
+ENTRYPOINT ["./run.sh"]
