@@ -45,7 +45,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     dstat \
     vim \
     iproute2 \
-	iperf3 \
+    iperf3 \
   # End of bug fixes
   && rm -rf /var/lib/apt/lists/* \
   # Optional: Update the command prompt 
@@ -62,4 +62,4 @@ USER mqperf
 WORKDIR /home/mqperf/iperf3
 EXPOSE 5201
 
-ENTRYPOINT ["iperf3 -s"]
+ENTRYPOINT ["iperf3"]
