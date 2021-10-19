@@ -62,4 +62,4 @@ USER mqperf
 WORKDIR /home/mqperf/iperf3
 EXPOSE 5201
 
-ENTRYPOINT ["iperf3"]
+ENTRYPOINT ["iperf3 -s"]
