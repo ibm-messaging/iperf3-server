@@ -78,7 +78,7 @@ Local IP Addresses:
 Running iperf3 server:
 ```
 
-You can then launch the iperf-client as a job, setting the envvar IPERF3_HOSTNAME to the desired IP address:
+You can then launch the iperf-client as a job, by default it uses the svc address (iperf3-server), but this can be overridden by setting the envvar IPERF3_HOSTNAME to the desired IP address:
 ```
 oc create -f iperf-client-job.yaml
 oc logs job.batch/iperf3-client
