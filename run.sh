@@ -1,6 +1,8 @@
 #!/bin/bash
-echo "Iperf3 Testing: server"
-echo "Local IP Addresses"
+echo "iperf3 testing: server"
+echo ""
+echo "Local IP Addresses:"
 ip a
-echo "Running iperf3 server"
+echo ""
+echo "Running iperf3 server:"
 iperf3 -s 
