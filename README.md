@@ -104,3 +104,6 @@ Connecting to host 10.130.4.200, port 5201
 
 iperf Done.
 ```
+
+### Running parallel tasks
+There might be occasions when you want to run more than one iperf test concurrently, this might be to test higher bandwidth NIC (A single iperf instance is limited to around 30Gbps) or to test different links in your Kube environment at the same time. Its simple to scale up the iperf server by increasing the replica count in the iperf3 server deployment descriptor. The iperf3 job yaml provided above has some rules that will avoid placing the client on the same node as the server or on which another client is running. There is a parellelism value in the job file which can be increased to run 2 or more clients in parallel. This should work (and has on occasion) as the requests to the iperf3-server service are distributed across the running servers, but sometimes errors are thrown from iperf. I suspect the request are not always distributed in an equal round-robin fashion. You could then start individual jobs each going to a seperate endpoint (`oc describe svc iperf3-server`).
