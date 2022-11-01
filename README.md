@@ -8,6 +8,8 @@ The built image is available at:
 docker pull stmassey/iperf3-server
 ```
 
+Details on the iperf3-client image can be found at https://github.com/ibm-messaging/iperf3-client
+
 ## Use in docker/podman local environments
 
 You can run the client and server on the default docker bridge network (or even one of your own defined networks), but its more likely you will want to run it on the host network
