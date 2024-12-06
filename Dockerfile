@@ -13,53 +13,28 @@
 # limitations under the License.
 
 # FROM ubuntu:22.04  
-FROM quay.io/stmassey/ubuntu
+# FROM quay.io/stmassey/ubuntu
+# FROM registry.access.redhat.com/ubi9/ubi-minimal:latest
+FROM registry.access.redhat.com/ubi9/ubi:latest
 
 LABEL maintainer "Sam Massey <smassey@uk.ibm.com>"
 
-RUN export DEBIAN_FRONTEND=noninteractive \
-  # Install additional packages - do we need/want them all
-  && apt-get update -y \
-  && apt-get install -y --no-install-recommends \
-    bash \
-    bc \
-    ca-certificates \
-    coreutils \
-    curl \
-    debianutils \
-    file \
-    findutils \
-    gawk \
-    grep \
-    libc-bin \
-    lsb-release \
-    mount \
-    passwd \
-    procps \
-    sed \
-    tar \
-    util-linux \
-    iputils-ping \
-    sysstat \
-    procps \
-    apt-utils \
-    dstat \
-    vim \
-    iproute2 \
-    iperf3 \
-  # End of bug fixes
-  && rm -rf /var/lib/apt/lists/* \
-  # Optional: Update the command prompt 
-  && echo "iperf3" > /etc/debian_chroot \
-  && sed -i 's/password\t\[success=1 default=ignore\]\tpam_unix\.so obscure sha512/password\t[success=1 default=ignore]\tpam_unix.so obscure sha512 minlen=8/' /etc/pam.d/common-password \
-  && groupadd --system --gid 999 mqm \
-  && useradd --system --uid 999 --gid mqm mqperf \
-  && echo mqperf:orland02 | chpasswd \
+# RUN dnf install openssl wget ca-certificates gzip tar bash bc ca-certificates coreutils curl file findutils gawk grep passwd procps sed util-linux procps iputils vim iproute iperf3 \
+RUN dnf install -y wget bc file procps procps iputils vim\
+  # Update and clean
+  && dnf update; dnf clean all \
+  # Add group and user 
+  && groupadd --system --gid 800 mqm \
+  && useradd --system --uid 800 --gid mqm mqperf \
   && mkdir -p /home/mqperf/iperf3 \
   && chown -R mqperf /home/mqperf/iperf3 \
+  # Update the command prompt 
+  && echo "export PS1='iperf3-server:\u@\h:\w\$ '" >> /home/mqperf/.bashrc \
   && echo "cd ~/iperf3" >> /home/mqperf/.bashrc
 
-COPY *.sh /home/mqperf/iperf3/
+COPY run.sh /home/mqperf/iperf3/
+COPY libiperf.so.0 /usr/local/lib
+COPY iperf3 /home/mqperf/iperf3
 USER mqperf
 WORKDIR /home/mqperf/iperf3
 EXPOSE 5201

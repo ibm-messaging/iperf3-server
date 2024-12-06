@@ -5,4 +5,4 @@ echo "Local IP Addresses:"
 ip a
 echo ""
 echo "Running iperf3 server:"
-iperf3 -s 
+./iperf3 -s 
